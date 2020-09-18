@@ -37,12 +37,13 @@ vector<string> split_string(string);
 
     }
 
-    int min_elemment_greater_than_i=0;
+    
 
-    for(int i=1;i<a.size();i++)
+    for(int i=0;i<a.size();i++)
     {
         int element=sum_modulo.at(i);
         int index=0;
+        long min_elemment_greater_than_i=0;
 
         for(int j=0;j<i;j++)
         {

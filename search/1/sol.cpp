@@ -16,15 +16,15 @@ vector<string> split_string(string);
     long int max_mod=0;
     long int sum=0;
     long int mod;
-    long int temp;
+    long int temp=0;
     std::vector<long> sum_modulo;
 
-    
+    //sum_modulo.push_back(0);
 
     for(int i=0;i<a.size();i++)
     {
-        temp=a.at(i)%m;
-        sum=sum+temp;
+        //temp=a.at(i)%m;
+        sum=sum+a.at(i);
         mod=sum%m;
         sum_modulo.push_back(mod);
         
@@ -37,25 +37,49 @@ vector<string> split_string(string);
 
     }
 
+    int min_elemment_greater_than_i=0;
 
-    for(int i=0;i<a.size();i++)
+    for(int i=1;i<a.size();i++)
     {
-        for(int j=i-1;j>0;j--)
+        int element=sum_modulo.at(i);
+        int index=0;
+
+        for(int j=0;j<i;j++)
         {
-            mod=(sum_modulo.at(i)-sum_modulo.at(j)+m)%m;
-            if(mod>max_mod)
+            if(sum_modulo.at(j)>element)
             {
-                max_mod=mod;
+                if(index==0)
+                {
+                    min_elemment_greater_than_i=sum_modulo.at(j);
+                    index=1;
+                }
+
+                else if(index==1)
+                {
+                    if(min_elemment_greater_than_i>sum_modulo.at(j))
+                    {
+                        min_elemment_greater_than_i=sum_modulo.at(j);
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+
+
             }
         }
-        if(max_mod<sum_modulo.at(i))
+
+        mod=(sum_modulo.at(i)-min_elemment_greater_than_i+m)%m;
+        if(mod>max_mod)
         {
-            max_mod=sum_modulo.at(i);
+            max_mod=mod;
         }
+
     }
 
 
-    cout<<"the max mod is "<<max_mod;
+    //cout<<"the max mod is "<<max_mod;
 
 return max_mod;
 
@@ -69,44 +93,87 @@ return max_mod;
 int main()
 {
     ifstream infile;
-    infile.open("/home/shashank/Documents/1/input/input18.txt");
+    infile.open("/home/shashank/Documents/hacker_rank/search/1/input/input01.txt");
     if(!infile)
     {
     	cout<<"unable to open"<<endl;
     	return 0;
     }
 
-    string nm_temp;
-   
-    getline(infile,nm_temp);
-    getline(infile,nm_temp);
-
-    vector<string> nm = split_string(nm_temp);
-
-    int n = stoi(nm[0]);
-    cout<<n<<endl;
-
-    long m = stol(nm[1]);
-    cout<<m<<endl;
-
-    string a_temp_temp;
-    getline(infile, a_temp_temp);
-
-    vector<string> a_temp = split_string(a_temp_temp);
-
-    vector<long> a(n);
-
-    for (int i = 0; i < n; i++)
+    ifstream outfile;
+    outfile.open("/home/shashank/Documents/hacker_rank/search/1/output/output01.txt");
+    //outfile.open("/home/shashank/Documents/hacker_rank/search/1/output/test_output.txt",ios::app);
+    if(!outfile)
     {
-        long a_item = stol(a_temp[i]);
-
-         a[i] = a_item;
-
-        cout<<a[i]<<endl;
+        cout<<"unable to open output file"<<endl;
+        return 0;
     }
 
 
-    maximumSum(a,m);
+    string nm_temp;
+    string read_out_file;
+   
+    getline(infile,nm_temp);
+
+    int num_of_querry=stoi(nm_temp);
+
+    
+
+    
+    
+
+    for (int j=1;j<=num_of_querry;j++)
+    {
+
+        getline(infile,nm_temp);
+
+        vector<string> nm = split_string(nm_temp);
+
+        int n = stoi(nm[0]);
+        //cout<<j<<" "<<n<<endl;
+
+        long m = stol(nm[1]);
+        //cout<<"the correct value is "<<m<<endl;
+
+        string a_temp_temp;
+        getline(infile, a_temp_temp);
+        vector<string> a_temp = split_string(a_temp_temp);
+        vector<long> a(n);
+
+        for (int i = 0; i < n; i++)
+        {
+            long a_item = stol(a_temp[i]);
+
+             a[i] = a_item;
+
+            //cout<<a[i]<<endl;
+        }
+
+
+
+        long temp=maximumSum(a,m);
+        a.clear();
+
+      //cout<<"the output computed is "<<temp<<endl;
+
+        getline(outfile,read_out_file);
+        int out = stoi(read_out_file);
+
+        //cout<<"the real output  is "<<out<<endl;
+
+        if(out != temp)
+        {
+            cout<<"the output value is "<< out <<" the computed is" << temp<<endl;
+        }
+
+    }
+
+    //compare output 
+
+
+
+
+
 
     return 0;
 }

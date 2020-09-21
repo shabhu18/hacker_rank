@@ -17,67 +17,93 @@ vector<string> split_string(string);
     long int sum=0;
     long int mod;
     long int temp=0;
-    std::vector<long> sum_modulo;
+    std::set<long> sum_modulo;
 
-    //sum_modulo.push_back(0);
-
+    //use tree to solve te problem
     for(int i=0;i<a.size();i++)
     {
         //temp=a.at(i)%m;
         sum=sum+a.at(i);
         mod=sum%m;
-        sum_modulo.push_back(mod);
-        
-        if(temp > max_mod)
+        //sum_modulo.push_back(mod);
+
+        sum_modulo.emplace(mod);
+        set<long>::iterator it;
+        it=sum_modulo.upper_bound(mod);
+
+        if(it == sum_modulo.end())
         {
-            max_mod=temp;
+            if(mod > max_mod)
+            {
+                max_mod=mod;
+            }
+            else
+            {
+                continue;
+            }
+
         }
+        else
+        {
+            long value=*it;
+            mod=(mod-value+m)%m;
+            if(mod > max_mod)
+            {
+                max_mod=mod;
+            }
+            else
+            {
+                continue;
+            }
 
 
 
+        }
+    
     }
 
     
+// goto each element find the minimun element larger than i
+// TODO use tree structure 
+    // for(int i=0;i<a.size();i++)
+    // {
+    //     int element=sum_modulo.at(i);
+    //     int index=0;
+    //     long min_elemment_greater_than_i=0;
 
-    for(int i=0;i<a.size();i++)
-    {
-        int element=sum_modulo.at(i);
-        int index=0;
-        long min_elemment_greater_than_i=0;
+    //     for(int j=0;j<i;j++)
+    //     {
+    //         if(sum_modulo.at(j)>element)
+    //         {
+    //             if(index==0)
+    //             {
+    //                 min_elemment_greater_than_i=sum_modulo.at(j);
+    //                 index=1;
+    //             }
 
-        for(int j=0;j<i;j++)
-        {
-            if(sum_modulo.at(j)>element)
-            {
-                if(index==0)
-                {
-                    min_elemment_greater_than_i=sum_modulo.at(j);
-                    index=1;
-                }
-
-                else if(index==1)
-                {
-                    if(min_elemment_greater_than_i>sum_modulo.at(j))
-                    {
-                        min_elemment_greater_than_i=sum_modulo.at(j);
-                    }
-                }
-                else
-                {
-                    continue;
-                }
+    //             else if(index==1)
+    //             {
+    //                 if(min_elemment_greater_than_i>sum_modulo.at(j))
+    //                 {
+    //                     min_elemment_greater_than_i=sum_modulo.at(j);
+    //                 }
+    //             }
+    //             else
+    //             {
+    //                 continue;
+    //             }
 
 
-            }
-        }
+    //         }
+    //     }
 
-        mod=(sum_modulo.at(i)-min_elemment_greater_than_i+m)%m;
-        if(mod>max_mod)
-        {
-            max_mod=mod;
-        }
+    //     mod=(sum_modulo.at(i)-min_elemment_greater_than_i+m)%m;
+    //     if(mod>max_mod)
+    //     {
+    //         max_mod=mod;
+    //     }
 
-    }
+    // }
 
 
     //cout<<"the max mod is "<<max_mod;

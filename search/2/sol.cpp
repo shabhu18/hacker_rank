@@ -14,12 +14,12 @@ bool compare(const pair<int,int> &p1, const pair<int,int> &p2)
 }
 
 // Complete the gridlandMetro function below.
-int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
+long int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
 
     //condition for no track present
 
 
-    long no_of_cells=n*m;
+    long int no_of_cells=long(n)*long(m);
 
     if(k==0)
     {
@@ -33,14 +33,14 @@ int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
     for (int i=0;i<k;i++)
     {
         vector<int> v=track.at(i);
-        long row=v.at(0);
+        long int row=v.at(0);
         pair<long,long> col_pair;
         col_pair.first=v.at(1);
         col_pair.second=v.at(2);
 
         if(col_pair.second < col_pair.first)
         {
-            long temp =col_pair.second;
+            long int temp =col_pair.second;
             col_pair.second=col_pair.first;
             col_pair.first=temp;
         }
@@ -50,12 +50,12 @@ int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
     }
 
 
-    long count_railway_track=0;
+    long int count_railway_track=0;
     for(auto i=hash_table.begin(); i !=hash_table.end() ; i++)
     {
         vector<pair<long,long>> vec;
 
-        cout<<i->first<<endl;
+        //cout<<i->first<<endl;
         vec=i->second;
         sort(vec.begin(), vec.end(),compare) ;
         stack <long> grid;
@@ -89,16 +89,16 @@ int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
         }
         while(!grid.empty())
         {
-            long first = grid.top();
+            long int first = grid.top();
             grid.pop();
-            long second=grid.top();
+            long int second=grid.top();
             grid.pop();
             count_railway_track=count_railway_track+first-second+1;
             
         }
 
         
-
+        //printf("%ld\n",no_of_cells);
 
         //cout<<"iteration "<<endl;
 
@@ -109,7 +109,7 @@ int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
     }
 
 
-    long lamp_post_position=no_of_cells-count_railway_track;
+    long int lamp_post_position=(long)no_of_cells-(long)count_railway_track;
     return lamp_post_position;
 
 
@@ -157,7 +157,7 @@ int main()
         //cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 
-    int result = gridlandMetro(n, m, k, track);
+    long int result = gridlandMetro(n, m, k, track);
 
     cout << result << "\n";
 

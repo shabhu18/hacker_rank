@@ -23,7 +23,7 @@ long int gridlandMetro(int n, int m, int k, vector<vector<int>> track) {
 
     if(k==0)
     {
-        return n*m;
+        return long(n)*long(m);
     }
 
     //arranging data in unordered map

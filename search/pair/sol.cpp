@@ -1,0 +1,105 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<string> split_string(string);
+
+// Complete the pairs function below.
+int pairs(long int k, vector<int> arr) {
+
+    sort(arr.begin(),arr.end());
+    int count=0;
+
+
+    int i=0;
+    int j=1;
+    while(j< arr.size())
+    {
+        long int diff=arr.at(j)-arr.at(i);
+        if(diff == k)
+        {
+            count++;
+            j++;
+        }
+        else if(diff > k)
+        {
+            i++;
+        }
+        else
+        {
+            j++;
+
+        }
+    }
+    cout<<"count "<<count<<endl;
+    return count;
+
+}
+
+int main()
+{
+    //ofstream fout(getenv("OUTPUT_PATH"));
+
+    ifstream myfile;
+    myfile.open("/home/shashank/Documents/hacker_rank/search/pair/input/input15.txt");
+
+    string nk_temp;
+    getline(myfile, nk_temp);
+
+    vector<string> nk = split_string(nk_temp);
+
+    int n = stoi(nk[0]);
+
+    long int k = stoi(nk[1]);
+
+    string arr_temp_temp;
+    getline(myfile, arr_temp_temp);
+
+    vector<string> arr_temp = split_string(arr_temp_temp);
+
+    vector<int> arr(n);
+
+    for (int i = 0; i < n; i++) {
+        int arr_item = stoi(arr_temp[i]);
+
+        arr[i] = arr_item;
+    }
+
+    int result = pairs(k, arr);
+
+    //fout << result << "\n";
+
+    //fout.close();
+
+    return 0;
+}
+
+vector<string> split_string(string input_string) {
+    string::iterator new_end = unique(input_string.begin(), input_string.end(), [] (const char &x, const char &y) {
+        return x == y and x == ' ';
+    });
+
+    input_string.erase(new_end, input_string.end());
+
+    while (input_string[input_string.length() - 1] == ' ') {
+        input_string.pop_back();
+    }
+
+    vector<string> splits;
+    char delimiter = ' ';
+
+    size_t i = 0;
+    size_t pos = input_string.find(delimiter);
+
+    while (pos != string::npos) {
+        splits.push_back(input_string.substr(i, pos - i));
+
+        i = pos + 1;
+        pos = input_string.find(delimiter, i);
+    }
+
+    splits.push_back(input_string.substr(i, min(pos, input_string.length()) - i + 1));
+
+    return splits;
+}
+

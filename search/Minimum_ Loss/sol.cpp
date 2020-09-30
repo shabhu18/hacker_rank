@@ -2,42 +2,67 @@
 
 using namespace std;
 
+
+bool sortbyfirst(const pair<long int,int> &a,const pair<long int,int> &b)
+{
+    return (a.first > b.first);
+}
+
 vector<string> split_string(string);
 
 // Complete the minimumLoss function below.
-long int minimumLoss(vector<long> price) {
+ long int minimumLoss(vector<long> price) {
 
 
+    int first_loss=0;
     long int min_loss;
-    int first_index=0;
-
+    vector<pair<long int,int>> price_index;
     for(int i=0;i<price.size();i++)
     {
-        for(int j=i+1;j<price.size();j++)
-        {
-            if(price.at(i)>price.at(j))
-            {
-                long int loss=price.at(i)-price.at(j);
-                if(first_index == 0)
-                {
-                    min_loss=loss;
-                    first_index=1;
-                }
-                else
-                {
-                    min_loss=min(loss,min_loss);
-                }
-            }
-        }
+        pair<long int,int> temp;
+        temp.first=price.at(i);
+        temp.second=i;
+        price_index.push_back(temp);
     }
 
+    sort(price_index.begin(),price_index.end(),sortbyfirst);
+
+    for(int i=0;i<price_index.size()-1;i++)
+    {
+         pair<long int,int> temp=price_index.at(i);
+         pair<long int,int> temp_next=price_index.at(i+1);
+        if((temp_next.second > temp.second) && (temp.first > temp_next.first))
+        {
+            long int loss=temp.first-temp_next.first;
+            if(first_loss==0)
+            {
+                min_loss=loss;
+                first_loss=1;
+            }
+            else
+            {
+                min_loss=min(loss,min_loss);
+            }    
+
+        }
+
+    }
+
+    if(first_loss==0)
+    {
+        min_loss=0;
+    }
+
+
+    cout<<"the ans is"<<min_loss;
     return min_loss;
+
 }
 
 int main()
 {
     ifstream infile;
-    infile.open("/home/shashank/Documents/hacker_rank/Minimum_ Loss/input/input00.txt");
+    infile.open("/home/shashank/Documents/hacker_rank/search/Minimum_ Loss/input/input15.txt");
     if(!infile)
     {
         cout<<"unable to open"<<endl;

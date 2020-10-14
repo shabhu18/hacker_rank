@@ -160,7 +160,7 @@ int connectedCell(vector<vector<int>> matrix) {
 int main()
 {
     ifstream myfile;
-    myfile.open("/home/shashank/Documents/hacker_rank/search/connnected_cell/input/input00.txt");
+    myfile.open("/home/shashank/Documents/hacker_rank/search/shortest_palindrone/input/input00.txt");
     if(!myfile)
     {
         cout<<"unable to open"<<endl;

@@ -24,7 +24,7 @@ int shortPalindrome(string s) {
 		
 			if(freq_triplet[index] > 0 && i>2)
 			{
-				complete_palindrome[index]=complete_palindrome[index]+freq_triplet[index];
+				complete_palindrome[index]=(complete_palindrome[index]+freq_triplet[index])%val;
 			}
 			
 
@@ -34,7 +34,7 @@ int shortPalindrome(string s) {
 		{
 			if(freq_pair[k][index] > 0 && i>1)
 			{
-				freq_triplet[k]=freq_triplet[k]+freq_pair[k][index];
+				freq_triplet[k]=(freq_triplet[k]+freq_pair[k][index]) % val;
 			}
 		}
 
@@ -44,7 +44,7 @@ int shortPalindrome(string s) {
 			if(freq_letter[j]>0 && i>0)
 			{
 				//pair_index=(j+1)*26+index;
-				freq_pair[j][index]=freq_pair[j][index]+freq_letter[j];
+				freq_pair[j][index]=(freq_pair[j][index]+freq_letter[j]) % val;
 			}
 		}
 
